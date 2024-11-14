@@ -2,6 +2,8 @@ import type { Schema } from "../resource"
 import { env } from "$amplify/env/add-user-to-group"
 import {
   AdminAddUserToGroupCommand,
+  CreateGroupCommand,
+  GetGroupCommand,
   CognitoIdentityProviderClient,
 } from "@aws-sdk/client-cognito-identity-provider"
 
@@ -10,6 +12,13 @@ const client = new CognitoIdentityProviderClient()
 
 export const handler: Handler = async (event) => {
   const { userId, groupName } = event.arguments
+
+  
+  const createGroupCommand = new CreateGroupCommand({
+    GroupName: groupName,
+    UserPoolId: env.AMPLIFY_AUTH_USERPOOL_ID,
+  })
+  await client.send(createGroupCommand)
   const command = new AdminAddUserToGroupCommand({
     Username: userId,
     GroupName: groupName,

@@ -14,12 +14,13 @@ const schema = a.schema({
         userId: a.string().required(),
         groupName: a.string().required(),
       })
-      .authorization((allow) => [allow.group("ADMINS")])
+      .authorization((allow) => [allow.authenticated()])
       .handler(a.handler.function(addUserToGroup))
       .returns(a.json()),
   Todo: a
     .model({
       content: a.string(),
+      group: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
 });

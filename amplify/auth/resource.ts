@@ -8,10 +8,8 @@ import { addUserToGroup } from "../data/add-user-to-group/resource";
 export const auth = defineAuth({
   loginWith: {
     email: true,
-  },
-  groups: ["ADMINS"],
-    
+  },    
   access: (allow) => [
-    allow.resource(addUserToGroup).to(['addUserToGroup'])
+    allow.resource(addUserToGroup).to(['addUserToGroup', 'createGroup', 'getGroup', 'listGroups'])
   ],
 });

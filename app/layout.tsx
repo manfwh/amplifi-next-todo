@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import Sidebar from "./components/Sidebar";
 import "./app.css";
 import Provider from "./components/Provider";
 
@@ -19,7 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>{children}</Provider>
+        <Provider>
+          <div className="flex">
+            <Sidebar />
+            {children}
+          </div>
+        </Provider>
       </body>
     </html>
   );
