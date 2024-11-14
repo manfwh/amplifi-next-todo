@@ -13,12 +13,17 @@ const client = new CognitoIdentityProviderClient()
 export const handler: Handler = async (event) => {
   const { userId, groupName } = event.arguments
 
+  // TODO: Check if group already exists
+  try {
+    const createGroupCommand = new CreateGroupCommand({
+      GroupName: groupName,
+      UserPoolId: env.AMPLIFY_AUTH_USERPOOL_ID,
+    })
+    await client.send(createGroupCommand) 
+  } catch (error) {
+    console.log(error)
+  }
   
-  const createGroupCommand = new CreateGroupCommand({
-    GroupName: groupName,
-    UserPoolId: env.AMPLIFY_AUTH_USERPOOL_ID,
-  })
-  await client.send(createGroupCommand)
   const command = new AdminAddUserToGroupCommand({
     Username: userId,
     GroupName: groupName,

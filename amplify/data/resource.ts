@@ -22,7 +22,10 @@ const schema = a.schema({
       content: a.string(),
       group: a.string(),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.groupDefinedIn('group'),
+      allow.authenticated()
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
